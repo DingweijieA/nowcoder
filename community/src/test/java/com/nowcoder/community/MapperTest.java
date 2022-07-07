@@ -29,11 +29,12 @@ public class MapperTest {
 
     @Test
     public void testSelectUser(){
+        logger.error("debug");
         User user = userMapper.selectById(101);
         System.out.println(user);
          user = userMapper.selectByName("liubei");
         System.out.println(user);
-        logger.debug("debug");
+
     }
 
     @Test

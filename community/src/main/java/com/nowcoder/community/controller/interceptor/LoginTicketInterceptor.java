@@ -17,6 +17,7 @@ import java.util.Date;
 @Component
 public class LoginTicketInterceptor implements HandlerInterceptor {
 
+
     @Autowired
     private UserService userService;
 

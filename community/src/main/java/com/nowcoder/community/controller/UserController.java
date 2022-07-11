@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
@@ -92,8 +93,8 @@ public class UserController {
         // 响应图片
         response.setContentType("image/" + suffix);
         try (//放在括号内可以自动final关闭流
-                FileInputStream fis = new FileInputStream(fileName);
-                OutputStream os = response.getOutputStream();
+             FileInputStream fis = new FileInputStream(fileName);
+             OutputStream os = response.getOutputStream();
         ) {
             byte[] buffer = new byte[1024];
             int b = 0;
@@ -104,5 +105,24 @@ public class UserController {
             logger.error("读取头像失败: " + e.getMessage());
         }
     }
+
+    @RequestMapping(path = "/changePassword", method = RequestMethod.POST)
+    public String updatePassword(String newPassword, String oldPassword, Model model) {
+        User user = hostHolder.getUser();
+        Map<String, Object> map = userService.updatePassword(user.getId(), oldPassword, newPassword);
+        if (map.isEmpty()) {
+            System.out.println("修改密码成功");
+            return "redirect:/index";
+
+        } else {
+            model.addAttribute("newPasswordMsg", map.get("newPasswordMsg"));
+            model.addAttribute("oldPasswordMsg", map.get("oldPasswordMsg"));
+            return "/site/setting";
+
+        }
+
+
+    }
+
 
 }

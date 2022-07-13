@@ -161,4 +161,13 @@ public class AlphaController {
 //    3、代理nginx解决方案有粘性session（负载不均衡）、同步session（占用内存，耦合度高）、session库（访问速度慢）、redis
 //
 
+    // ajax示例
+    @RequestMapping(path = "/ajax", method = RequestMethod.POST)
+    @ResponseBody
+    public String testAjax(String name, int age) {
+        System.out.println(name);
+        System.out.println(age);
+        return CommunityUtil.getJSONString(0, "操作成功!");
+    }
+
 }
